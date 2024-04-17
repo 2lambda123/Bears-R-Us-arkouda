@@ -117,7 +117,7 @@ def read_server_and_port_from_file(server_connection_info):
     while True:
         try:
             with open(server_connection_info, "r") as f:
-                (hostname,port,connect_url) = f.readline().split(" ")
+                (hostname,port,connect_url) = f.readline(5_000_000).split(" ")
                 port = int(port)
                 if hostname == socket.gethostname():
                     hostname = "localhost"
