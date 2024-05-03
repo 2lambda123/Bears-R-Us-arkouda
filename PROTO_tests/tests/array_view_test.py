@@ -1,10 +1,10 @@
-import random
 from itertools import product
 
 import numpy as np
 import pytest
 
 import arkouda as ak
+import secrets
 
 SHAPE = {
     56: (7, 8),
@@ -74,7 +74,7 @@ class TestArrayView:
         iav = ak.arange(size).reshape(SHAPE[size])
         uav = ak.arange(size, dtype=ak.uint64).reshape(SHAPE[size])
 
-        nind = tuple(random.randint(0, y - 1) for y in SHAPE[size])
+        nind = tuple(secrets.SystemRandom().randint(0, y - 1) for y in SHAPE[size])
         iind = ak.array(nind)
         uind = ak.cast(iind, ak.uint64)
 
@@ -109,7 +109,7 @@ class TestArrayView:
             a = ak.arange(size).reshape(SHAPE[size])
             truth = tuple(j != i - 1 if i > 0 else True for j in range(N))
 
-            val = random.randint(1, 10)
+            val = secrets.SystemRandom().randint(1, 10)
             n[truth] = val
             a[truth] = val
 

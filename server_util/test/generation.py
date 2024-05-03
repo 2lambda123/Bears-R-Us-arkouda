@@ -1,10 +1,10 @@
-import random
 from string import ascii_lowercase, ascii_uppercase, digits
 from typing import Mapping
 
 import h5py
 import numpy as np
 from context import arkouda as ak
+import secrets
 
 ALPHABET = ascii_lowercase
 UPPERCASE_ALPHABET = ascii_uppercase
@@ -23,9 +23,9 @@ def generate_alpha_string(length: int = 10, uppercase: bool = False) -> str:
     :retype: str
     """
     if uppercase:
-        return "".join(random.choice(UPPERCASE_ALPHABET) for _ in range(length))
+        return "".join(secrets.choice(UPPERCASE_ALPHABET) for _ in range(length))
     else:
-        return "".join(random.choice(ALPHABET) for _ in range(length))
+        return "".join(secrets.choice(ALPHABET) for _ in range(length))
 
 
 def generate_alphanumeric_string(length: int = 10, uppercase: bool = False) -> str:
@@ -39,9 +39,9 @@ def generate_alphanumeric_string(length: int = 10, uppercase: bool = False) -> s
     :retype: str
     """
     if uppercase:
-        return "".join(random.choice(UPPERCASE_ALPHANUMERIC) for _ in range(length))
+        return "".join(secrets.choice(UPPERCASE_ALPHANUMERIC) for _ in range(length))
     else:
-        return "".join(random.choice(ALPHANUMERIC) for _ in range(length))
+        return "".join(secrets.choice(ALPHANUMERIC) for _ in range(length))
 
 
 def generate_alpha_string_array(

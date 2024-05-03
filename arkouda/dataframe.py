@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import os
-import random
 from collections import UserDict
 from typing import Callable, Dict, List, Optional, Union, cast
 from warnings import warn
@@ -37,6 +36,7 @@ from arkouda.series import Series
 from arkouda.sorting import argsort, coargsort
 from arkouda.strings import Strings
 from arkouda.timeclass import Datetime, Timedelta
+import secrets
 
 # This is necessary for displaying DataFrames with BitVector columns,
 # because pandas _html_repr automatically truncates the number of displayed bits
@@ -2344,7 +2344,7 @@ class DataFrame(UserDict):
         self.update_nrows()
         if self._nrows <= n:
             return self
-        return self[array(random.sample(range(self._nrows), n))]
+        return self[array(secrets.SystemRandom().sample(range(self._nrows), n))]
 
     def GroupBy(self, keys, use_series=False, as_index=True, dropna=True):
         """

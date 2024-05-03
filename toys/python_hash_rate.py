@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-import random
 import sys
 import string
 import time
 import argparse
+import secrets
 
 NINPUTS = 1_000_000
 INPUTSIZE = 8
@@ -12,7 +12,7 @@ INPUTSIZE = 8
 def test_hash(N, I):
     S = []
     for i in range(N):
-        s = ''.join(random.choices(string.ascii_letters, k=I))
+        s = ''.join(secrets.SystemRandom().choices(string.ascii_letters, k=I))
         S.append(s)
 
     start = time.time()

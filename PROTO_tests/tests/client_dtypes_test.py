@@ -1,9 +1,9 @@
 import ipaddress
-import random
 
 import pytest
 
 import arkouda as ak
+import secrets
 
 INT_TYPES = [ak.int64, ak.uint64]
 
@@ -143,7 +143,7 @@ class TestClientDTypes:
 
     def test_is_ipv4(self):
         prob_size = 100
-        x = [random.getrandbits(32) for _ in range(prob_size)]
+        x = [secrets.SystemRandom().getrandbits(32) for _ in range(prob_size)]
 
         ans = ak.is_ipv4(ak.array(x, dtype=ak.uint64))
         assert ans.to_list() == [True] * prob_size
@@ -152,7 +152,7 @@ class TestClientDTypes:
         assert ak.is_ipv4(ipv4).to_list() == [True] * prob_size
 
         x = [
-            random.getrandbits(64) if i < prob_size / 2 else random.getrandbits(32)
+            secrets.SystemRandom().getrandbits(64) if i < prob_size / 2 else secrets.SystemRandom().getrandbits(32)
             for i in range(prob_size)
         ]
         ans = ak.is_ipv4(ak.array(x, ak.uint64))
@@ -166,14 +166,14 @@ class TestClientDTypes:
 
     def test_is_ipv6(self):
         prob_size = 100
-        x = [random.getrandbits(128) for _ in range(prob_size)]
+        x = [secrets.SystemRandom().getrandbits(128) for _ in range(prob_size)]
         low = ak.array([i & (2**64 - 1) for i in x], dtype=ak.uint64)
         high = ak.array([i >> 64 for i in x], dtype=ak.uint64)
 
         assert ak.is_ipv6(high, low).to_list() == [True] * prob_size
 
         x = [
-            random.getrandbits(64) if i < prob_size / 2 else random.getrandbits(32)
+            secrets.SystemRandom().getrandbits(64) if i < prob_size / 2 else secrets.SystemRandom().getrandbits(32)
             for i in range(prob_size)
         ]
         ans = ak.is_ipv6(ak.array(x, ak.uint64))
