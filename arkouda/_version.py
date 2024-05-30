@@ -14,6 +14,7 @@ import os
 import re
 import subprocess
 import sys
+from security import safe_command
 
 
 def get_keywords():
@@ -76,8 +77,7 @@ def run_command(commands, args, cwd=None, verbose=False, hide_stderr=False, env=
         try:
             dispcmd = str([c] + args)
             # remember shell=False, so use git.cmd on windows, not just git
-            p = subprocess.Popen(
-                [c] + args,
+            p = safe_command.run(subprocess.Popen, [c] + args,
                 cwd=cwd,
                 env=env,
                 stdout=subprocess.PIPE,

@@ -21,6 +21,7 @@ import socket
 import subprocess
 import time
 from enum import Enum
+from security import safe_command
 
 
 class TestRunningMode(Enum):
@@ -209,7 +210,7 @@ def start_arkouda_server(numlocales, trace=False, port=5555, host=None, server_a
         cmd += server_args
 
     logging.info('Starting "{}"'.format(cmd))
-    process = subprocess.Popen(cmd, stdout=subprocess.DEVNULL)
+    process = safe_command.run(subprocess.Popen, cmd, stdout=subprocess.DEVNULL)
     atexit.register(kill_server, process)
 
     if not host:

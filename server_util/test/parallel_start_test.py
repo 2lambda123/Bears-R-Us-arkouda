@@ -8,6 +8,7 @@ import os
 import os.path
 import subprocess
 import sys
+from security import safe_command
 
 SLOTS = 4
 
@@ -45,7 +46,7 @@ def process_dir(test_dir):
 def subprocess_start_test(fn):
     print(f"Calling subprocess on {fn}")
     cmd = ["start_test", fn]
-    return subprocess.run(capture_output=True, args=cmd)
+    return safe_command.run(subprocess.run, capture_output=True, args=cmd)
 
 
 def successful_completed_process(p: subprocess.CompletedProcess):
