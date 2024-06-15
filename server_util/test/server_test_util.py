@@ -177,7 +177,7 @@ def kill_server(server_process):
             pass
 
         if server_process.poll() is None:
-            logging.warn("Attempting dirty server shutdown")
+            logging.warning("Attempting dirty server shutdown")
             server_process.kill()
 
 
